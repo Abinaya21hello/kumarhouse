@@ -1,0 +1,27 @@
+
+  .email-message-input {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 250px;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none; /* Prevent textarea from being resized */
+    transition: all 0.3s ease;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    margin-top: 20px;
+    margin-right: 20px;
+  }
+  
+  .email-message-input::placeholder {
+    color: #999; /* Placeholder text color */
+  }
+  
+  .email-message-input:focus {
+    outline: none;
+    border-color: #2196f3; /* Focus border color */
+  }
+  

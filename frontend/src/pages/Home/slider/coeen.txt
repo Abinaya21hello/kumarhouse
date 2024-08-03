@@ -1,0 +1,178 @@
+import React, { useEffect, useContext, useState } from 'react';
+import Slider from "react-slick";
+import './index.css';
+import Slide1 from '../../../assets/banner/Kumar Herbals - Web Banner copy 1.jpg';
+import Slide2 from '../../../assets/banner/Kumar Herbals - Web Banner copy 2.jpg';
+import Button from '@mui/material/Button';
+import Newsletter from '../../../components/newsletter';
+import { MyContext } from '../../../App';
+import { Typography, Box } from '@mui/material';
+import { makeStyles } from "@mui/styles";
+import Confetti from 'js-confetti';
+
+const useStyles = makeStyles((theme) => ({
+    offerCard: {
+        backgroundColor: '#3BB77E',
+        borderRadius: '50%',
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        marginTop: theme.spacing(2),
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        width: '450px',
+        height: '450px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'relative', // Ensure position is relative for absolute positioning of confetti
+    },
+    offerText: {
+        color: '#FFFFFF',
+        fontWeight: 'bold',
+    },
+    countdown: {
+        display: 'flex',
+        justifyContent: 'center',
+        gap: theme.spacing(1),
+        marginTop: theme.spacing(1),
+        color: '#FFFFFF',
+    },
+    slideInfo: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        color: '#fff',
+        textAlign: 'center',
+        padding: theme.spacing(2),
+        borderRadius: '20px',
+    },
+    shopButton: {
+        marginTop: theme.spacing(2),
+    },
+}));
+
+const HomeSlider = () => {
+    const context = useContext(MyContext);
+    const classes = useStyles();
+    const [offerDetails, setOfferDetails] = useState({
+        offerPrice: 49.99,
+        expiryDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000) // 24 hours from now
+    });
+    const [timeLeft, setTimeLeft] = useState({});
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const now = new Date();
+            const distance = offerDetails.expiryDate - now;
+
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            setTimeLeft({
+                hours,
+                minutes,
+                seconds
+            });
+
+            if (distance < 0) {
+                clearInterval(interval);
+                setTimeLeft({});
+            }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [offerDetails.expiryDate]);
+
+    const handleShopButtonClick = () => {
+        const confetti = new Confetti();
+        confetti.addConfetti({
+            emojis: ['🌈', '⚡️', '💥', '✨', '💫', '🌸'],
+        });
+    };
+
+    var settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        fade: true,
+        arrows: context.windowWidth > 992 ? true : false,
+        autoplay: true
+    };
+
+    return (
+        <section className='homeSlider'>
+            <div className='container-fluid position-relative'>
+                <Slider {...settings} className='home_slider_Main'>
+                    <div className="item">
+                        <img src={Slide1} className='w-100' alt="Slide 1" />
+                        <div className='info'>
+                            <Typography variant="h2" className="mb-4">
+                                Don’t miss amazing<br />
+                                grocery deals
+                            </Typography>
+                            <Typography variant="body1">Sign up for the daily newsletter</Typography>
+                        </div>
+                        <Box className={classes.slideInfo}>
+                            <Box className={classes.offerCard}>
+                                <Typography variant="h4" className={classes.offerText}>
+                                    Special Offer: ${offerDetails.offerPrice}
+                                </Typography>
+                                <Box className={classes.countdown}>
+                                    <Typography variant="h6">{timeLeft.hours}h</Typography>
+                                    <Typography variant="h6">{timeLeft.minutes}m</Typography>
+                                    <Typography variant="h6">{timeLeft.seconds}s</Typography>
+                                </Box>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.shopButton}
+                                    onClick={handleShopButtonClick}
+                                >
+                                    Shop Now
+                                </Button>
+                            </Box>
+                        </Box>
+                    </div>
+                    <div className="item">
+                        <img src={Slide2} className='w-100' alt="Slide 2" />
+                        <div className='info'>
+                            <Typography variant="h2" className="mb-3">
+                                Fresh Vegetables<br />
+                                Big discount
+                            </Typography>
+                            <Typography variant="body1">Sign up for the daily newsletter</Typography>
+                        </div>
+                        <Box className={classes.slideInfo}>
+                            <Box className={classes.offerCard}>
+                                <Typography variant="h4" className={classes.offerText}>
+                                    Special Offer: ${offerDetails.offerPrice}
+                                </Typography>
+                                <Box className={classes.countdown}>
+                                    <Typography variant="h6">{timeLeft.hours}h</Typography>
+                                    <Typography variant="h6">{timeLeft.minutes}m</Typography>
+                                    <Typography variant="h6">{timeLeft.seconds}s</Typography>
+                                </Box>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.shopButton}
+                                    onClick={handleShopButtonClick}
+                                >
+                                    Shop Now
+                                </Button>
+                            </Box>
+                        </Box>
+                    </div>
+                </Slider>
+
+                {context.windowWidth > 992 && <Newsletter />}
+            </div>
+        </section>
+    )
+}
+
+export default HomeSlider;

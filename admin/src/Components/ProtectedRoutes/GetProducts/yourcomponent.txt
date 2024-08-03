@@ -1,0 +1,331 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import {
+  Grid,
+  Paper,
+  Typography,
+  Button,
+  Box,
+  FormControl,
+  TextField,
+  IconButton,
+  MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+const YourComponent = () => {
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [editCategory, setEditCategory] = useState('');
+  const [openEditCategoryModal, setOpenEditCategoryModal] = useState(false);
+
+  const [mainProducts, setMainProducts] = useState([]);
+  const [editMainProduct, setEditMainProduct] = useState('');
+  const [openEditMainProductModal, setOpenEditMainProductModal] = useState(false);
+
+  const [subProducts, setSubProducts] = useState([]);
+  const [editSubProduct, setEditSubProduct] = useState('');
+  const [openEditSubProductModal, setOpenEditSubProductModal] = useState(false);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/getProducts', {
+        withCredentials: true,
+      });
+      setCategories(response.data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  const fetchMainProducts = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/main-products/${selectedCategory}`, {
+        withCredentials: true,
+      });
+      setMainProducts(response.data);
+    } catch (error) {
+      console.error('Error fetching main products:', error);
+    }
+  };
+
+  const fetchSubProducts = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/sub-products/${editMainProduct}`, {
+        withCredentials: true,
+      });
+      setSubProducts(response.data);
+    } catch (error) {
+      console.error('Error fetching sub products:', error);
+    }
+  };
+
+  const handleEditCategoryClick = (category) => {
+    setEditCategory(category);
+    setOpenEditCategoryModal(true);
+  };
+
+  const handleCategoryDelete = async (categoryId) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/category-delete/${categoryId}`, {
+        withCredentials: true,
+      });
+      fetchCategories(); // Refresh categories after deletion
+      setSelectedCategory(''); // Clear selected category
+    } catch (error) {
+      console.error('Error deleting category:', error);
+    }
+  };
+
+  const handleEditCategorySave = async () => {
+    try {
+      await axios.put(`http://localhost:5000/api/category-update/${editCategory._id}`, {
+        category: editCategory.category,
+        models: editCategory.models,
+      }, {
+        withCredentials: true,
+      });
+      setOpenEditCategoryModal(false);
+      fetchCategories(); // Refresh categories after update
+    } catch (error) {
+      console.error('Error updating category:', error);
+    }
+  };
+
+  const handleEditMainProductClick = (mainProduct) => {
+    setEditMainProduct(mainProduct);
+    setOpenEditMainProductModal(true);
+  };
+
+  const handleMainProductDelete = async (mainProductId) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/main-product-delete/${mainProductId}`, {
+        withCredentials: true,
+      });
+      fetchMainProducts(); // Refresh main products after deletion
+    } catch (error) {
+      console.error('Error deleting main product:', error);
+    }
+  };
+
+  const handleEditMainProductSave = async () => {
+    try {
+      await axios.put(`http://localhost:5000/api/main-product-update/${editMainProduct._id}`, {
+        mainProduct: editMainProduct.mainProduct,
+        subProduct: editMainProduct.subProduct,
+      }, {
+        withCredentials: true,
+      });
+      setOpenEditMainProductModal(false);
+      fetchMainProducts(); // Refresh main products after update
+    } catch (error) {
+      console.error('Error updating main product:', error);
+    }
+  };
+
+  const handleEditSubProductClick = (subProduct) => {
+    setEditSubProduct(subProduct);
+    setOpenEditSubProductModal(true);
+  };
+
+  const handleSubProductDelete = async (subProductId) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/sub-product-delete/${subProductId}`, {
+        withCredentials: true,
+      });
+      fetchSubProducts(); // Refresh sub products after deletion
+    } catch (error) {
+      console.error('Error deleting sub product:', error);
+    }
+  };
+
+  const handleEditSubProductSave = async () => {
+    try {
+      await axios.put(`http://localhost:5000/api/sub-product-update/${editSubProduct._id}`, {
+        subproductname: editSubProduct.subproductname,
+        shortdescription: editSubProduct.shortdescription,
+        briefDescription: editSubProduct.briefDescription,
+        currentPrice: editSubProduct.currentPrice,
+        offerPrice: editSubProduct.offerPrice,
+        grams: editSubProduct.grams,
+        Stock: editSubProduct.Stock,
+        TopSelling: editSubProduct.TopSelling,
+        image: editSubProduct.image,
+      }, {
+        withCredentials: true,
+      });
+      setOpenEditSubProductModal(false);
+      fetchSubProducts(); // Refresh sub products after update
+    } catch (error) {
+      console.error('Error updating sub product:', error);
+    }
+  };
+
+  const handleEditCategoryModalClose = () => {
+    setOpenEditCategoryModal(false);
+    setEditCategory(''); // Clear edit category state
+  };
+
+  const handleEditMainProductModalClose = () => {
+    setOpenEditMainProductModal(false);
+    setEditMainProduct(''); // Clear edit main product state
+  };
+
+  const handleEditSubProductModalClose = () => {
+    setOpenEditSubProductModal(false);
+    setEditSubProduct(''); // Clear edit sub product state
+  };
+
+  return (
+    <Box p={3}>
+      {/* Category Management */}
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <FormControl fullWidth variant="outlined">
+            <TextField
+              select
+              label="Category"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              variant="outlined"
+            >
+              {categories.map((category) => (
+                <MenuItem key={category._id} value={category._id}>
+                  {category.category}
+                  <IconButton onClick={() => handleEditCategoryClick(category)} aria-label="edit">
+                    <EditIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton onClick={() => handleCategoryDelete(category._id)} aria-label="delete">
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
+                </MenuItem>
+              ))}
+            </TextField>
+          </FormControl>
+        </Grid>
+      </Grid>
+
+      {/* Edit Category Modal */}
+      <Dialog open={openEditCategoryModal} onClose={handleEditCategoryModalClose}>
+        <DialogTitle>Edit Category</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Category Name"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            name="category"
+            value={editCategory.category}
+            onChange={(e) => setEditCategory({ ...editCategory, category: e.target.value })}
+          />
+          {/* Add more fields if needed */}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleEditCategoryModalClose} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={handleEditCategorySave} color="primary">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Main Product Management */}
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <FormControl fullWidth variant="outlined">
+            <TextField
+              select
+              label="Main Product"
+              value={editMainProduct}
+              onChange={(e) => setEditMainProduct(e.target.value)}
+              variant="outlined"
+            >
+              {mainProducts.map((mainProduct) => (
+                <MenuItem key={mainProduct._id} value={mainProduct._id}>
+                  {mainProduct.mainProduct}
+                  <IconButton onClick={() => handleEditMainProductClick(mainProduct)} aria-label="edit">
+                    <EditIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton onClick={() => handleMainProductDelete(mainProduct._id)} aria-label="delete">
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
+                </MenuItem>
+              ))}
+            </TextField>
+          </FormControl>
+        </Grid>
+      </Grid>
+
+      {/* Edit Main Product Modal */}
+      <Dialog open={openEditMainProductModal} onClose={handleEditMainProductModalClose}>
+        <DialogTitle>Edit Main Product</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Main Product Name"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            name="mainProduct"
+            value={editMainProduct.mainProduct}
+            onChange={(e) => setEditMainProduct({ ...editMainProduct, mainProduct: e.target.value })}
+          />
+          {/* Add more fields if needed */}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleEditMainProductModalClose} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={handleEditMainProductSave} color="primary">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Sub Product Management */}
+      <Grid container spacing={2}>
+        {subProducts.map((subProduct) => (
+          <Grid item xs={12} sm={6} key={subProduct._id}>
+            <Paper elevation={3} sx={{ p: 2 }}>
+              <Typography variant="h6">{subProduct.subproductname}</Typography>
+              <Typography variant="body1">{subProduct.shortdescription}</Typography>
+              <IconButton onClick={() => handleEditSubProductClick(subProduct)} aria-label="edit">
+                <EditIcon fontSize="small" />
+              </IconButton>
+              <IconButton onClick={() => handleSubProductDelete(subProduct._id)} aria-label="delete">
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+            </Paper>
+          </Grid>
+        ))}
+      </Grid>
+
+      {/* Edit Sub Product Modal */}
+      <Dialog open={openEditSubProductModal} onClose={handleEditSubProductModalClose}>
+        <DialogTitle>Edit Sub Product</DialogTitle>
+        <DialogContent>
+          {/* Add form fields for editing sub product */}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleEditSubProductModalClose} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={handleEditSubProductSave} color="primary">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
+  );
+};
+
+export default YourComponent;

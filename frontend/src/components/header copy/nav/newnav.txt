@@ -1,0 +1,316 @@
+import React, { useEffect, useState } from 'react';
+import './nav.css';
+import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import HeadphonesOutlinedIcon from '@mui/icons-material/HeadphonesOutlined';
+
+const Nav = ({ openNav, closeNav }) => {
+    const [isOpenNav, setIsOpenNav] = useState(false);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [openDropdownMenu, setOpenDropdownMenu] = useState(false);
+    const [openDropdownMenuIndex, setOpenDropdownMenuIndex] = useState(null);
+    const [openMegaMenu, setOpenMegaMenu] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const [mainProducts, setMainProducts] = useState([]);
+
+    useEffect(() => {
+        setIsOpenNav(openNav);
+    }, [openNav]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/categories'); // Replace with your categories endpoint
+                const data = await response.json();
+                setCategories(data); // Assuming data is an array of category names
+            } catch (error) {
+                console.error("Error fetching categories:", error);
+            }
+        };
+
+        const fetchMainProducts = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/main-products'); // Replace with your main products endpoint
+                const data = await response.json();
+                setMainProducts(data); // Assuming data is an array of main products
+            } catch (error) {
+                console.error("Error fetching main products:", error);
+            }
+        };
+
+        fetchCategories();
+        fetchMainProducts();
+    }, []);
+
+    useEffect(() => {
+        const handleResize = () => {
+            const newWidth = window.innerWidth;
+            if (newWidth !== windowWidth) {
+                setWindowWidth(newWidth);
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [windowWidth]);
+
+    const openDropdownFun = (index) => {
+        setOpenDropdownMenu(!openDropdownMenu);
+        setOpenDropdownMenuIndex(index === openDropdownMenuIndex ? null : index); // Toggle index
+    };
+
+    const handleMegaMenu = () => {
+        setOpenMegaMenu(!openMegaMenu);
+    };
+
+    const closeNavFun = () => {
+        setIsOpenNav(false);
+        closeNav();
+    };
+
+    return (
+        <nav className={`nav ${isOpenNav ? "open" : ""}`}>
+            <div className="closeNav">
+                <Button onClick={closeNavFun}>Close</Button>
+            </div>
+            <div className="nav_items">
+                <div className="item">
+                    <Link to="/home">
+                        <HeadphonesOutlinedIcon fontSize="large" />
+                    </Link>
+                    <p>Contact Us</p>
+                </div>
+                {mainProducts.map((category, index) => (
+                    <div className="item" key={index}>
+                        <Button onClick={() => openDropdownFun(index)}>
+                            {category.category}
+                            <KeyboardArrowDownIcon />
+                        </Button>
+                        {openDropdownMenu && openDropdownMenuIndex === index && (
+                            <ul className="dropdown">
+                                {category.mainProducts.map((product, subIndex) => (
+                                    <li key={subIndex}>
+                                        <Link to={`/category/${product}`}>{product}</Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+                ))}
+            </div>
+            <div className="megaMenu">
+                <Button onClick={handleMegaMenu}>Shop</Button>
+                {openMegaMenu && (
+                    <div className="megaMenu_content">
+                        {/* Add your mega menu content here */}
+                    </div>
+                )}
+            </div>
+        </nav>
+    );
+};
+
+export default Nav;
+import React, { useEffect, useState } from 'react';
+import './nav.css';
+import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import HeadphonesOutlinedIcon from '@mui/icons-material/HeadphonesOutlined';
+
+const Nav = ({ openNav, closeNav }) => {
+    const [isOpenNav, setIsOpenNav] = useState(false);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [openDropdownMenuIndex, setOpenDropdownMenuIndex] = useState(null);
+    const [openMegaMenu, setOpenMegaMenu] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const [mainProducts, setMainProducts] = useState([]);
+
+    useEffect(() => {
+        setIsOpenNav(openNav);
+    }, [openNav]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/categories'); // Replace with your categories endpoint
+                const data = await response.json();
+                setCategories(data); // Assuming data is an array of category names
+            } catch (error) {
+                console.error("Error fetching categories:", error);
+            }
+        };
+
+        const fetchMainProducts = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/main-products'); // Replace with your main products endpoint
+                const data = await response.json();
+                setMainProducts(data); // Assuming data is an array of objects [{ category: 'Category', mainProducts: ['Product1', 'Product2'] }]
+            } catch (error) {
+                console.error("Error fetching main products:", error);
+            }
+        };
+
+        fetchCategories();
+        fetchMainProducts();
+    }, []);
+
+    useEffect(() => {
+        const handleResize = () => {
+            const newWidth = window.innerWidth;
+            if (newWidth !== windowWidth) {
+                setWindowWidth(newWidth);
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [windowWidth]);
+
+    const openDropdownFun = (index) => {
+        setOpenDropdownMenuIndex(index === openDropdownMenuIndex ? null : index); // Toggle index
+    };
+
+    const closeDropdownMenu = () => {
+        setOpenDropdownMenuIndex(null);
+    };
+
+    const handleMegaMenu = () => {
+        setOpenMegaMenu(!openMegaMenu);
+    };
+
+    const closeNavFun = () => {
+        setIsOpenNav(false);
+        closeNav();
+    };
+
+    return (
+        <>
+            {isOpenNav && <div className='navbarOverlay' onClick={closeNav}></div>}
+            <div className={`nav d-flex align-items-center ${isOpenNav ? 'click' : ''}`}>
+                <div className='container-fluid'>
+                    <div className='row position-relative'>
+                        <div className='col-sm-2 part1 d-flex align-items-center'>
+                            <Button className='bg-g text-white catTab res-hide'>
+                                Browse All Categories <KeyboardArrowDownIcon />
+                            </Button>
+                        </div>
+
+                        <div className='col-sm-8 part2 position-static'>
+                            <nav className={isOpenNav ? 'open' : ''}>
+                                <ul className='list list-inline mb-0'>
+                                    <li className='list-inline-item'>
+                                        <Button>
+                                            <Link to={'/'} onClick={closeNav}>Home</Link>
+                                        </Button>
+                                    </li>
+
+                                    {mainProducts.map((category, index) => (
+                                        <li className='list-inline-item' key={index}>
+                                            {typeof category === 'object' ? (
+                                                <div className="item" key={index}>
+                                                    <Button onClick={() => openDropdownFun(index)}>
+                                                        {category.category}
+                                                        <KeyboardArrowDownIcon />
+                                                    </Button>
+                                                    {/* Dropdown for main products */}
+                                                    {openDropdownMenuIndex === index && (
+                                                        <ul className="dropdown-menu">
+                                                            {category.mainProducts.map((product, subIndex) => (
+                                                                <li key={subIndex}>
+                                                                    <Link to={`/category/${product}`}>{product}</Link>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    )}
+                                                </div>
+                                            ) : (
+                                                <span>{/* Handle non-object category */}</span>
+                                            )}
+                                        </li>
+                                    ))}
+
+                                    <li className='list-inline-item'>
+                                        <Button onClick={closeNav}>
+                                            <Link to={'/about'}>About</Link>
+                                        </Button>
+                                    </li>
+
+                                    <li className='list-inline-item position-static'>
+                                        <Button onClick={() => setOpenMegaMenu(!openMegaMenu)}>
+                                            <Link>Products <KeyboardArrowDownIcon className={`${openMegaMenu ? 'rotateIcon' : ''}`} /></Link>
+                                        </Button>
+                                        <div className={`dropdown_menu megaMenu w-100 ${openMegaMenu ? 'open' : ''}`}>
+                                            <div className='row'>
+                                               {categories.map((category, index) => (
+            <div className='col' key={index}>
+                {typeof category === 'string' ? (
+                    <>
+                        <Link to={`/cat/${category.toLowerCase()}`}>
+                            <h4 className='text-g text-capitalize'>{category}</h4>
+                        </Link>
+                        <ul className="sub-category-list">
+                            {mainProducts
+                                .filter(mainProduct => mainProduct.category === category)
+                                .flatMap(mainProduct => mainProduct.mainProducts)
+                                .map((product, subIndex) => (
+                                    <li key={subIndex}>
+                                        <Link to={`/category/${product.toLowerCase()}`}>
+                                            {product}
+                                        </Link>
+                                    </li>
+                                ))}
+                        </ul>
+                    </>
+                ) : (
+                    <span>{/* Handle non-string category */}</span>
+                )}
+            </div>
+        ))}
+
+
+                                                <div className='col'>
+                                                    <img src="https://wp.alithemes.com/html/nest/demo/assets/imgs/banner/banner-menu.png" className='w-100' alt="Banner" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li className='list-inline-item'>
+                                        <Button><Link to={'/contact'} onClick={closeNav}>Contact</Link></Button>
+                                    </li>
+                                </ul>
+
+                                {windowWidth < 992 && (
+                                    <div className='pl-3 pr-3'>
+                                        <br />
+                                        <Link to={'/signIn'}>
+                                            <Button className="btn btn-g btn-lg w-100" onClick={closeNav}>Sign In</Button>
+                                        </Link>
+                                    </div>
+                                )}
+                            </nav>
+                        </div>
+
+                        <div className='col-sm-2 part3 d-flex align-items-center'>
+                            <div className='phNo d-flex align-items-center ml-auto'>
+                                <span><HeadphonesOutlinedIcon /></span>
+                                <div className='info ml-3'>
+                                    <h3 className='text-g mb-0'>+91-9600811325</h3>
+                                    <p className='mb-0'>24/7 Support Center</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default Nav;

@@ -1,0 +1,62 @@
+/* Improved Card Design */
+.profileCard, .formCard {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  display: table; /* Changed to table display */
+  width: 100%; /* Ensure full width */
+}
+
+/* Table Layout within Card */
+.profileCard div, .formCard div {
+  display: table-row;
+}
+
+/* Card Sections */
+.profileCard div, .formCard div {
+  display: table-cell;
+  padding: 10px;
+  vertical-align: top;
+}
+
+/* Adjust Font Size */
+.profileCard .textField, .formCard .textField {
+  font-size: 1.25rem; /* Increase font size */
+}
+
+/* Card Header */
+.profileCard .typography--header, .formCard .typography--header {
+  font-size: 2rem; /* Increased font size */
+  font-weight: bold;
+  color: #388e3c; /* Custom color */
+}
+
+/* Card Subheader */
+.profileCard .typography--subheader, .formCard .typography--subheader {
+  font-size: 1.75rem; /* Increased font size */
+  color: #777; /* Custom color */
+}
+
+/* Card Table Headers */
+.table-container .table th {
+  font-size: 1.5rem; /* Increased font size */
+  background-color: #f4f4f4;
+}
+
+/* Card Table Cells */
+.table-container .table td {
+  font-size: 1.25rem; /* Increased font size */
+  padding: 1.5rem;
+}
+
+/* Ensure table width fits in card */
+.table-container {
+  width: 100%;
+}
+
+/* Address Section Alignment */
+.address {
+  margin-bottom: 10px;
+} 
+

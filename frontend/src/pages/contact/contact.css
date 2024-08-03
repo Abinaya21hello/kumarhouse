@@ -1,0 +1,107 @@
+.contacts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 0;
+  background-image: url("../../assets/contact/parallax.jpg");
+  background-attachment: fixed;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.contacts .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 90%;
+  max-width: 1400px;
+  gap: 20px;
+  background-color: aliceblue;
+}
+.contacts .left,
+.contacts .right {
+  width: 100%;
+}
+.contacts iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.contacts .right {
+  padding: 50px;
+}
+.contacts h1 {
+  font-size: 30px;
+  font-weight: 400;
+}
+.contacts p {
+  color: grey;
+}
+
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  width: 100%;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contacts .items {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0;
+}
+.contacts .box {
+  display: flex;
+  flex-direction: column;
+  margin-right: 50px;
+}
+.contacts .box h4 {
+  margin-bottom: 6px;
+}
+.contacts .box p {
+  font-size: 17px;
+  margin-top: 10px;
+  /* margin-right: 10px; */
+}
+/* .contacts textarea, */
+.contacts input,
+.contacts select {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 5px;
+  outline: none;
+  border: 1px solid grey;
+}
+.contacts .flexSB {
+  display: flex;
+  justify-content: space-between;
+}
+.contacts .flexSB input:nth-child(1) {
+  margin-right: 10px;
+}
+.contacts h3 {
+  margin-top: 20px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.contacts span {
+  color: #1eb2a6;
+  font-weight: 600;
+  font-size: 15px;
+  word-spacing: 5px;
+}
+@media screen and (max-width: 768px) {
+  .contacts .container {
+    grid-template-columns: 1fr;
+  }
+  .contacts iframe {
+    height: 50vh;
+  }
+  .contacts .items {
+    flex-direction: column;
+  }
+}

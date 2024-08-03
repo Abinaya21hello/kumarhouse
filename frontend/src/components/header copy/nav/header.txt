@@ -1,0 +1,178 @@
+import React, { useEffect, useState, createContext } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
+import './responsive.css';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import SubProduct from "./components/product/Productpage";
+
+import Header from './components/header copy/header';
+import Footer from './components/footer/footer';
+import Home from './pages/Home/index';
+import About from './pages/About/index';
+import Listing from './pages/Listing';
+import NotFound from './pages/NotFound';
+import DetailsPage from './pages/Details';
+import Checkout from './pages/checkout';
+import axios from 'axios';
+import Cart from './pages/cart';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import Wishlist from './pages/wishlist/Wishlist';
+import data from './data';
+import Forgot from './pages/forgotpassword/Forgot';
+import OffersPage from './components/CountdownTimer/Offerpage';
+import CustomerReviews from './components/customerreviews/CustomerReviews';
+import Contact from './pages/contact/Contact';
+
+//Dashboard
+import Dashboard from './pages/Dashboard/Pages/Dashboarduser/UserDashboard';
+import Sidebar from './components/Sidebar';
+import Profileforuser from './pages/Dashboard/Pages/Userprofile/UserProfile'
+// import Wishlistforuser from './pages/Dashboard/Pages/Wishlists/Wishlists'
+import Dashboardforuser from './pages/Dashboard/Pages/Dashboarduser/UserDashboard'
+import OrderHistory from './pages/Dashboard/Pages/OrderHistory/OrderHistory';
+import Refundforuser from './pages/Dashboard/Pages/Refund/Refund';
+
+import CategoryPage from './pages/categorypage/Categorypage';
+import WhatsApp from './components/whatsapp/WhatsApp';
+import Product from './components/product/Product';
+import SubProductDetails from './pages/products/ProductList';
+import ModelProduct from './pages/products/ModelProducts/ModelProduct';
+import FloatingMailIcon from './components/email floating icon/Floating';
+import ProductDetail from './components/product/Productpage';
+
+const MyContext = createContext();
+
+function App() {
+  const [productData, setProductData] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [isopenNavigation, setIsopenNavigation] = useState(false);
+  const [isLogin, setIsLogin] = useState();
+  const [isOpenFilters, setIsOpenFilters] = useState(false);
+  const [cartTotalAmount, setCartTotalAmount] = useState();
+  const location = useLocation();
+
+  useEffect(() => {
+    const is_Login = localStorage.getItem('isLogin');
+    setIsLogin(is_Login);
+
+    setTimeout(() => {
+      setProductData(data[1]);
+      setIsLoading(false);
+    }, 3000);
+  }, []);
+
+  useEffect(() => {
+    const fetchCartData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/cartItems");
+        setCartItems(response.data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    fetchCartData();
+  }, []);
+
+  const addToCart = async (item) => {
+    item.quantity = 1;
+
+    try {
+      const res = await axios.post("http://localhost:5000/cartItems", item);
+      setCartItems([...cartItems, { ...item, quantity: 1 }]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const removeItemsFromCart = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/cartItems/${id}`);
+      getCartData("http://localhost:5000/cartItems");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const emptyCart = () => {
+    setCartItems([]);
+  };
+
+  const signIn = () => {
+    const is_Login = localStorage.getItem('isLogin');
+    setIsLogin(is_Login);
+  };
+
+  const signOut = () => {
+    localStorage.removeItem('isLogin');
+    setIsLogin(false);
+  };
+
+  const openFilters = () => {
+    setIsOpenFilters(!isOpenFilters);
+  };
+
+  const value = {
+    cartItems,
+    isLogin,
+    windowWidth,
+    isOpenFilters,
+    signOut,
+    signIn,
+    openFilters,
+    isopenNavigation,
+    setIsopenNavigation,
+    setCartTotalAmount,
+    cartTotalAmount,
+    setCartItems,
+  };
+
+  const showHeaderAndFooter = !['/dash', '/user-profile', '/orders', '/userwishlists', '/refunds'].some(path => location.pathname.startsWith(path));
+
+  return (
+    data.productData.length !== 0 && (
+      <MyContext.Provider value={value}>
+        {showHeaderAndFooter && <Header />}
+        <Routes>
+          <Route exact path="/" element={<Home data={data.productData} />} />
+          <Route exact path="/cat/:id" element={<Listing data={data.productData} single={true} />} />
+          <Route exact path="/cat/:id/:id" element={<Listing data={data.productData} single={false} />} />
+          <Route exact path="/product/:productId/models/:modelId/sub/:subProductId" element={<DetailsPage />} />
+          <Route exact path="/category/:id/:productName" element={<CategoryPage />} />
+          <Route exact path="/cart" element={<Cart />} />
+          <Route exact path="/signIn" element={<SignIn />} />
+          <Route exact path="/signUp" element={<SignUp />} />
+          <Route exact path="/checkout" element={<Checkout />} />
+          <Route exact path="/about" element={<About />} />
+          <Route exact path="*" element={<NotFound />} />
+          <Route path="/api/password-reset/:userId/:token" element={<Forgot />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/offer" element={<OffersPage />} />
+          <Route path="/category/:mainProduct" element={<Listing />} />
+
+          <Route path="/user-profile" element={<Profileforuser />} />
+          <Route path="/product" element={<Product />} />
+          <Route path="/product/:productId/models/:modelId/subproducts/:subProductId" element={<SubProductDetails />} />
+          <Route path="/products/:productId/models/:modelId" element={<ModelProduct />} />
+
+          {/* Additional Routes to show Header */}
+          <Route exact path="/dash" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboardforuser />} />
+          {/* <Route path="/userwishlists" element={<Wishlistforuser />} />//////// */}
+          <Route path="/orders" element={<OrderHistory />} />
+          <Route path="/refunds" element={<Refundforuser />} />
+          <Route path="/product/:productId/:modelId/:subProductId" element={<ProductDetail />} />
+        </Routes>
+        {showHeaderAndFooter && <Footer />}
+        <WhatsApp phoneNumber="+919600811325" message="Hello! I'm interested in your services." />
+        <FloatingMailIcon emailAddress="kumarsandcompanies@gmail.com" />
+      </MyContext.Provider>
+    )
+  );
+}
+
+export default App;
+export { MyContext };

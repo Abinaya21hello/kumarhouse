@@ -1,0 +1,8 @@
+/* Add this to your existing CSS or create a new CSS file */
+  .whatsapp-container {
+    position: relative;
+    bottom: 100px; /* Adjust as needed */
+    right: 80px; /* Adjust as needed */
+    z-index: 1000; /* Ensure it's above other content */
+  }
+  

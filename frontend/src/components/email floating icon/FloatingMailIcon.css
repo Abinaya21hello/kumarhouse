@@ -1,0 +1,28 @@
+/* FloatingMailIcon.css */
+
+.floating-mail-icon-container {
+    position: fixed;
+    bottom: 110px;
+    right: 33px;
+    color: #fff;
+    z-index: 1;
+  }
+  
+  .floating-mail-icon {
+    background-color: #007bff;
+    /* Set icon color to white */
+    width: 63px;
+    height: 63px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .floating-mail-icon:hover {
+    background-color: #0056b3;
+    color: #fff;
+  }
+  

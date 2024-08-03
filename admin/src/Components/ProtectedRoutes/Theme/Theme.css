@@ -1,0 +1,81 @@
+/* App.css */
+
+/* Global Styles */
+body {
+    font-family: 'Gill Sans MT', sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 0;
+  }
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  /* AppBar */
+  .appBar {
+    background: rgba(76, 175, 80, 0.8); /* Primary color with transparency */
+    backdrop-filter: blur(10px); /* Blur effect */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Drawer */
+  .drawer {
+    background: rgba(255, 255, 255, 0.8); /* White with transparency */
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    padding: 16px;
+  }
+  
+  /* Card */
+  .card {
+    background: rgba(255, 255, 255, 0.8); /* White with transparency */
+    backdrop-filter: blur(10px);
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    padding: 16px;
+    margin: 16px;
+  }
+  
+  /* Button */
+  .button {
+    background: rgba(210, 235, 205, 0.8); /* Lighter green with transparency */
+    backdrop-filter: blur(10px);
+    color: black;
+    text-transform: none; /* Disable uppercase transformation */
+    border-radius: 4px;
+    padding: 8px 16px;
+    margin: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }
+  
+  .button:hover {
+    background: rgba(172, 198, 170, 0.8); /* Darker green on hover */
+    color: black;
+  }
+  
+  /* Table */
+  .table {
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8); /* White with transparency */
+    backdrop-filter: blur(10px);
+  }
+  
+  .table th {
+    background-color: #f4f6f8;
+    padding: 16px;
+  }
+  
+  .table td {
+    padding: 16px;
+    background-color: white;
+    border-bottom: none;
+  }
+  

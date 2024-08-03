@@ -1,0 +1,35 @@
+/* Add this CSS to your stylesheet */
+.homeContainer {
+  background-color: #fafbfd;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border: 1px solid #000; /* Set border for table headers and cells */
+  padding: 8px; /* Add padding to table headers and cells */
+}
+
+.table th {
+  background-color: lightgray;
+  /* Background color for table headers */
+  text-align: left; /* Align text in table headers to the left */
+}
+
+.table th:last-child,
+.table td:last-child {
+  text-align: center; /* Align last column text to center */
+}
+
+.table tr:hover {
+  background-color: #f5f5f5; /* Highlight row on hover */
+}
+
+.btn-danger {
+  background-color: #fe633e; /* Set button background color to orange */
+  color: white; /* Set button text color to white */
+}

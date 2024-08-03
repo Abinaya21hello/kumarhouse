@@ -1,0 +1,34 @@
+.slick-slider {
+  margin: 0 auto;
+  padding: 20px 0;
+  width: 100%; /* Ensure the slider takes full width */
+  max-width: 100%; /* Ensure it respects the container's width */
+}
+
+.slick-prev,
+.slick-next {
+  width: 40px;
+  height: 40px;
+  z-index: 1;
+  background-color: #11c829; /* Example background color */
+}
+
+.slick-prev:before,
+.slick-next:before {
+  font-size: 40px;
+  color: #6c757d;
+}
+
+.slick-dots li button:before {
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #4caf50;
+}
+
+.slick-slide > div {
+  display: flex;
+  justify-content: center;
+}

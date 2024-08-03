@@ -1,0 +1,44 @@
+/* sidebar.css */
+.sidebar {
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 20px; /* Adjust as needed */
+  max-height: calc(100vh - 20px); /* Full viewport height minus some offset */
+  overflow-y: auto;
+}
+
+.card {
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+.priceRange {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filterWrapper {
+  margin-top: 20px;
+}
+
+.res-hide {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .res-hide {
+    display: block;
+  }
+}
+
+nav .dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 300px;
+  background: #fff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  padding: 20px;
+  display: none;
+  z-index: 1000;
+}

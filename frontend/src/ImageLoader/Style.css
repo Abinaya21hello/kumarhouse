@@ -1,0 +1,54 @@
+/* div.image-loader-container { */
+/* background: linear-gradient(rgba(255, 0, 0, 0.174), rgba(0, 0, 0, 0.223)); */
+/* background-color: transparent !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: 153.5vh !important; */
+/* } */
+
+div.image-loader-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+}
+
+.image-wrapper {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 130px;
+  height: 130px;
+  border: 5px solid transparent;
+  animation: border-animation 1.5s linear infinite;
+  margin: 10px;
+}
+
+.image-wrapper.loading {
+  border-color: rgb(57, 208, 57);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+@keyframes border-animation {
+  0% {
+    border-color: green transparent green transparent;
+  }
+  50% {
+    border-color: transparent green transparent green;
+  }
+  100% {
+    border-color: green transparent green transparent;
+  }
+}

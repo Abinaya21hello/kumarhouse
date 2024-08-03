@@ -1,0 +1,51 @@
+import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import Lottie from "react-lottie";
+import successAnimation from "./successAnimation.json";
+import "./OrderSuccess.css";
+import Button from "@mui/material/Button";
+
+const OrderSuccess = () => {
+  const navigate = useNavigate();
+  const { orderId } = useParams();
+  const defaultOptions = {
+    loop: false,
+    autoplay: true,
+    animationData: successAnimation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
+  const orderPageNavigate = () => {
+    navigate("/producted/order-details");
+  };
+
+  return (
+    <div className="order-success-container">
+      <div className="animation-container">
+        <Lottie options={defaultOptions} height={200} width={200} />
+      </div>
+      <h2 className="success-message">
+        Your order has been placed successfully!
+      </h2>
+      <p>Your order id : {orderId}</p>
+      <div className="d-flex">
+        <Button variant="text" color="success" onClick={orderPageNavigate}>
+          view order
+        </Button>
+        <Button
+          variant="text"
+          color="success"
+          onClick={() => {
+            navigate("/product");
+          }}
+        >
+          Products
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default OrderSuccess;

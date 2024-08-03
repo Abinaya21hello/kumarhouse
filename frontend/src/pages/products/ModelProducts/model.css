@@ -1,0 +1,97 @@
+.model-product-container {
+  padding: 20px;
+  margin-top: 70px;
+}
+
+.model-product-card {
+  padding: 20px;
+  background-color: #e9dbbb;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-bottom: 20px; /* Default margin-bottom */
+}
+
+.model-product-card-blue {
+  border-color: blue;
+}
+
+.model-product-image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.model-product-info h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.model-product-info p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.model-product-price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #4CAF50;
+}
+
+.model-product-btn .model-product-buy-btn,
+.model-product-btn .model-product-fav,
+.model-product-btn .model-product-compare {
+  margin-top: 10px;
+  margin-right: 10px;
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.model-product-btn .model-product-buy-btn:hover,
+.model-product-btn .model-product-fav:hover,
+.model-product-btn .model-product-compare:hover {
+  background-color: #45a049;
+}
+
+.single-card .model-product-card {
+  width: 350px; /* Increase the width */
+  padding: 30px; /* Increase the padding */
+  margin: 0 auto; /* Center the card */
+}
+
+@media (max-width: 1024px) {
+  .model-product-card {
+    margin-bottom: 40px; /* Increase margin-bottom for medium screens */
+  }
+}
+
+@media (max-width: 600px) {
+  .model-product-card {
+    margin-bottom: 60px; /* Increase margin-bottom for small screens */
+  }
+}
+.custom-slider .slick-slider {
+  width: 100% !important;
+}
+
+.custom-slider .slick-list {
+  overflow: hidden !important;
+}
+
+.custom-slider .slick-track {
+  display: flex !important;
+  width: 100% !important;
+  transform: none !important;
+}
+
+.custom-slider .slick-slide {
+  width: auto !important;
+  opacity: 1 !important;
+  transform: none !important;
+}

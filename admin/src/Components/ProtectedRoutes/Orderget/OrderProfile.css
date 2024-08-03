@@ -1,0 +1,103 @@
+body {
+  margin: 0;
+  font-family: "Gill Sans MT";
+}
+
+.root {
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  min-height: 100vh;
+  padding: 2rem;
+  color: #fff;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.table-header {
+  background-color: #6a11cb;
+  color: #fff;
+}
+
+.table-cell {
+  color: #333;
+}
+
+.filter {
+  margin-bottom: 1rem;
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.edit-button {
+  color: #6a11cb;
+}
+
+.update-button {
+  background-color: #6a11cb;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.update-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px 16px;
+  text-align: center;
+}
+
+th {
+  background-color: #6a11cb;
+  color: #fff;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.OrderFilterContainer {
+  margin: 20px 0px;
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between !important;
+}
+.status {
+  padding: 3px;
+  color: #fff;
+}
+.status-paid,
+.status-received {
+  background-color: green !important;
+}
+
+.status-pending,
+.status-not-received {
+  background-color: orange;
+}
+
+.status-cancelled {
+  background-color: red;
+}

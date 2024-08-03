@@ -1,0 +1,182 @@
+/* Product Detail Page Styles */
+.detailsPage {
+    padding: 20px;
+    /* background-color: #f0f0f0; Background color for the section */
+}
+
+.detailsContainer {
+    background-color: #e9dbbb; /* Background color for the container */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* 3D card effect */
+}
+
+.breadcrumbWrapper {
+    margin-bottom: 20px;
+}
+
+.breadcrumb {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.breadcrumb li {
+    display: inline;
+    font-size: 14px;
+}
+
+.breadcrumb li:not(:last-child):after {
+    content: ">";
+    margin: 0 5px;
+}
+
+.productInfo {
+    padding-left: 20px; /* Adjust as needed */
+}
+
+.productInfo h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.productInfo .rating {
+    margin-bottom: 10px;
+}
+
+.priceSec {
+    margin-bottom: 10px;
+}
+
+.priceLarge {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4CAF50; /* Green color for price */
+}
+
+.text-org {
+    color: #FF9800; /* Orange color for discount percentage */
+}
+
+.oldPrice {
+    color: #757575; /* Light gray color for original price */
+}
+
+.productInfo p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.addtocartbtn {
+    background-color: #4CAF50; /* Green color for buttons */
+    color: #ffffff; /* White text color */
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.addtocartbtn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.btn-border {
+    border: 1px solid #4CAF50; /* Green border for buttons */
+    color: #4CAF50; /* Green text color */
+    background-color: transparent;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-border:hover {
+    color: #45a049; /* Darker green text on hover */
+    border-color: #45a049; /* Darker green border on hover */
+}
+
+.wishlist {
+    background-color: #ffffff; /* White background for wishlist button */
+    color: #4CAF50; /* Green text color */
+    border: 1px solid #4CAF50; /* Green border */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.wishlist:hover {
+    background-color: #f0f0f0; /* Light gray background on hover */
+    color: #45a049; /* Darker green text on hover */
+    border-color: #45a049; /* Darker green border on hover */
+}
+
+.btn-g {
+    background-color: #4CAF50; /* Green background for general buttons */
+    color: #ffffff; /* White text color */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-g:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.no-click {
+    pointer-events: none; /* Disable clicking when button is disabled */
+    opacity: 0.6; /* Reduce opacity for disabled look */
+}
+
+/* prodetail.css */
+
+.single-product-img {
+    position: relative;
+    overflow: hidden;
+    /* height: 200%; */
+    width: 800%;
+}
+
+.single-product-img img {
+    transition: transform 0.4s ease;
+}
+
+.single-product-img:hover img {
+    transform: scale(1.1); /* Increase the scale value for a stronger zoom effect */
+}
+
+/* ./prodetail.css */
+
+.productInfo {
+    justify-content: center;
+    text-align: left; /* Center align text */
+}
+
+.priceSec {
+    justify-content: left; /* Center align flex items */
+}
+
+/* Adjust other specific styles as needed */
+.single-product-img {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    max-height: 900px; /* Adjust the max height as needed */
+}
+
+.single-product-img img {
+    width: 100%; /* Ensure the image takes the full width of the container */
+    height: auto; /* Maintain the aspect ratio */
+    object-fit: contain; /* Ensure the image scales correctly within the container */
+    margin: auto; /* Center the image within the container */
+}
+.stock-low {
+    color: red;
+}
+
+.stock-available {
+    color: green;
+}

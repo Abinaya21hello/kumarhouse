@@ -1,0 +1,165 @@
+/* Modal styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure modal appears above other content */
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80%;
+  overflow-y: auto;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  color: #aaa;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+select,
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical !important; /* Allow vertical resizing */
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.error {
+  color: red;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 1.2rem;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.orderEmptyImg {
+  width: 600px;
+  height: 600px;
+}
+
+.order-history-content {
+  flex: 1;
+  padding: 20px;
+  height: 100vh;
+}
+
+/* .table-responsive {
+  overflow-x: scroll !important;
+  -webkit-overflow-scrolling: touch;
+} */
+
+.order-list {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.order-list th,
+.order-list td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.order-list th {
+  background-color: #f2f2f2;
+}
+
+.order-item:hover {
+  background-color: #f9f9f9;
+}
+
+.view-invoice button,
+.view-invoice span {
+  margin-right: 5px;
+}
+
+.cancel_danger {
+  color: red;
+  font-weight: bold;
+}
+
+.product-item {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.product-item th,
+.product-item td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.product-item img {
+  max-width: 80px;
+  max-height: 80px;
+  object-fit: contain;
+}
+
+@media screen and (max-width: 768px) {
+  .orderEmptyImg {
+    width: 400px;
+    height: 400px;
+  }
+}

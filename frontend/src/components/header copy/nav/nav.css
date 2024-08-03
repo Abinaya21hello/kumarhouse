@@ -1,0 +1,129 @@
+.navContainer {
+  /* width: 100%;
+    height: 80px; */
+  margin: auto;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.catTab {
+  padding: 8px 20px !important;
+  font-size: 20px !important;
+  text-transform: capitalize !important;
+}
+
+nav ul li {
+  position: relative;
+}
+.categoryContainer {
+  color: #3bb77e !important;
+}
+
+.modelContainer {
+  text-decoration: none !important;
+  color: #000 !important;
+}
+
+.subProductContainer {
+  font-size: 20px !important;
+}
+
+nav ul li button {
+  text-transform: capitalize !important;
+  padding: 21px 25px !important;
+  color: #3bb77e !important; /* Green color for buttons */
+  border-radius: 0px !important;
+}
+
+nav ul li button a {
+  text-decoration: none !important;
+  color: rgba(0, 0, 0, 0.8) !important;
+  font-size: 21px;
+}
+
+.part3 .phNo svg {
+  font-size: 45px !important;
+  opacity: 0.8;
+}
+
+.part3 .phNo h3 {
+  font-size: 30px !important;
+  line-height: 35px !important;
+}
+
+.part3 .phNo p {
+  font-size: 20px !important;
+  opacity: 0.8;
+}
+
+nav .dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 300px;
+  background: #fff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  padding: 20px;
+  display: none;
+  z-index: 1000;
+}
+
+nav .dropdown-content {
+  display: flex;
+}
+
+nav .dropdown-content .col {
+  flex: 1;
+}
+
+nav .dropdown-content .col ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav .dropdown-content .col ul li {
+  margin-bottom: 10px;
+}
+
+nav .dropdown-content .col ul li a {
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 16px;
+  text-decoration: none;
+}
+
+nav ul li:hover .dropdown {
+  display: block;
+}
+
+/* nav.css */
+
+/* .navbar-item .navbar-link {
+  color: #12c864;
+  text-decoration: none;
+  position: relative;
+} */
+
+/* .navbar-item .navbar-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 2px;
+  background-color: #12c864;
+  border-radius: 2px;
+} */
+
+/* .navbar-item .navbar-link:hover {
+  color: #3bb77e;
+} */
+
+.navbar-link.active {
+  color: rgb(173, 199, 25) !important;
+}
+
+@media (max-width: 992px) {
+  .res-hide {
+    display: none;
+  }
+}

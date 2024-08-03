@@ -1,0 +1,87 @@
+.selectDropWrapper {
+  position: relative;
+}
+
+.openSelect {
+  display: flex;
+  align-items: center;
+  padding: 10px 0px;
+  font-weight: 600;
+  font-size: 18px !important;
+  cursor: pointer;
+}
+
+.arrow {
+  margin-left: 8px;
+  font-size: 25px;
+}
+
+.selectDrop {
+  width: 300px;
+  background: #fff;
+  position: absolute;
+  top: 100%; /* Adjusted to place the dropdown below the select button */
+  left: 0; /* Align to the left of the select button */
+  z-index: 100;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  padding: 15px;
+}
+
+.searchResults {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.searchResults .searchItem {
+  font-size: 17px;
+  padding: 10px;
+  color: rgba(0, 0, 0, 0.7);
+  border-radius: 7px;
+  cursor: pointer;
+  position: relative;
+}
+
+.searchResults .searchItem:hover {
+  background: #3bb77e;
+  color: #fff;
+}
+
+.searchResults .searchItem.active {
+  background: #f1f1f1;
+  color: #000 !important;
+}
+
+.modelDropdown {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 105%; /* Position to the right of the category item */
+  width: 200px;
+  background: white;
+  /* border: 1px solid #ccc; */
+  z-index: 1000;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.selectDropWrapper .modelDropdown li {
+  padding: 10px;
+}
+.categoryItem:hover .modelDropdown {
+  display: block;
+}
+
+.modelItem {
+  padding: 8px 16px;
+}
+
+.modelContainer {
+  display: block;
+  text-decoration: none;
+  color: black;
+}
+
+.modelContainer:hover {
+  background: #f0f0f0;
+}

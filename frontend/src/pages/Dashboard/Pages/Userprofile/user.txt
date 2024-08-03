@@ -1,0 +1,74 @@
+// PasswordUpdateForm
+
+import React from 'react'
+import Sidebar from '../../Pages/Sidebar'
+
+function PasswordUpdateForm() {
+  return (
+    <div className='d-flex'>
+      <Sidebar/>
+  <FormCard>
+      <CardHeader
+        title={<Typography variant="h5">Update Password</Typography>}
+      />
+      <CardContent>
+        <Formik
+          initialValues={{
+            oldPassword: "",
+            newPassword: "",
+            confirmNewPassword: "",
+          }}
+          validationSchema={PasswordUpdateSchema}
+          onSubmit={handleSubmitPassword}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              <Field
+                as={StyledTextField}
+                name="oldPassword"
+                label="Old Password"
+                type="password"
+                fullWidth
+                variant="outlined"
+                helperText={<ErrorMessage name="oldPassword" />}
+                error={<ErrorMessage name="oldPassword" />}
+              />
+              <Field
+                as={StyledTextField}
+                name="newPassword"
+                label="New Password"
+                type="password"
+                fullWidth
+                variant="outlined"
+                helperText={<ErrorMessage name="newPassword" />}
+                error={<ErrorMessage name="newPassword" />}
+              />
+              <Field
+                as={StyledTextField}
+                name="confirmNewPassword"
+                label="Confirm New Password"
+                type="password"
+                fullWidth
+                variant="outlined"
+                helperText={<ErrorMessage name="confirmNewPassword" />}
+                error={<ErrorMessage name="confirmNewPassword" />}
+              />
+              <Box display="flex" justifyContent="center">
+                <SubmitButton
+                  type="submit"
+                  disabled={isSubmitting}
+                  startIcon={isSubmitting && <CircularProgress size="1rem" />}
+                >
+                  {isSubmitting ? "Updating..." : "Update Password"}
+                </SubmitButton>
+              </Box>
+            </Form>
+          )}
+        </Formik>
+      </CardContent>
+    </FormCard>
+    </div>
+  )
+}
+
+export default PasswordUpdateForm

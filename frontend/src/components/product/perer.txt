@@ -1,0 +1,361 @@
+import React, { useEffect, useState, useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, Link } from "react-router-dom";
+import { Typography, CircularProgress, Button, Rating } from "@mui/material";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { listSubProducts } from "../../redux/actions/productActions";
+import { addToCart } from "../../redux/actions/cartActions";
+import { addToWishlist, removeFromWishlist } from "../../redux/actions/wishlistActions";
+import { MyContext } from "../../App";
+import Confetti from "js-confetti";
+import "./prodetail.css"; // Assuming you have custom styles in this file
+
+const ProductDetail = () => {
+  const { productId, modelId, subProductId } = useParams();
+  const dispatch = useDispatch();
+  const context = useContext(MyContext);
+  const userId = localStorage.getItem("userId");
+
+  const [isAdded, setIsAdded] = useState(false);
+  const [isInWishlist, setIsInWishlist] = useState(false);
+
+  useEffect(() => {
+    dispatch(listSubProducts(productId, modelId, subProductId));
+  }, [dispatch, productId, modelId, subProductId]);
+
+  const productDetail = useSelector((state) => state.subProducts);
+  const wishlist = useSelector((state) => state.wishlist);
+
+  useEffect(() => {
+    if (wishlist.wishlistItems.some((item) => item._id === subProductId)) {
+      setIsInWishlist(true);
+    } else {
+      setIsInWishlist(false);
+    }
+  }, [wishlist, subProductId]);
+
+  if (productDetail.loading) {
+    return <CircularProgress />;
+  }
+
+  if (!productDetail.subProducts || Object.keys(productDetail.subProducts).length === 0) {
+    return <Typography variant="body1">No products available.</Typography>;
+  }
+
+  const { subProducts } = productDetail;
+
+  // Ensure subProducts and availableQuantity are properly accessed
+  const grams = subProducts.grams;
+  const availableQuantity = subProducts.availableQuantity || 0; // Default to 0 if availableQuantity is undefined
+  const qty = 1; // Default quantity to add to cart, can be adjusted as needed
+  const total = subProducts.offerPrice * qty;
+
+  const handleAddToCart = () => {
+    if (qty <= availableQuantity) {
+      dispatch(addToCart(userId, productId, modelId, subProductId, qty, subProducts.offerPrice, grams, ));
+      setIsAdded(true);
+      const confetti = new Confetti();
+      confetti.addConfetti();
+    } else {
+      alert(Available quantity is ${availableQuantity});
+    }
+  };
+
+  const handleAddToWishlist = () => {
+    dispatch(addToWishlist(userId, productId, modelId, subProductId, qty));
+    setIsInWishlist(true);
+  };
+
+  const handleRemoveFromWishlist = () => {
+    dispatch(removeFromWishlist(subProductId));
+    setIsInWishlist(false);
+  };
+
+  return (
+    <>
+      {context.windowWidth < 992 && (
+        <Button
+          className={btn-g btn-lg w-100 filterBtn ${isAdded && "no-click"}}
+          onClick={handleAddToCart}
+        >
+          <ShoppingCartOutlinedIcon />
+          {isAdded ? "Added" : "Add To Cart"}
+        </Button>
+      )}
+
+      <section className="detailsPage mb-5">
+        {context.windowWidth > 992 && (
+          <div className="breadcrumbWrapper mb-4">
+            <div className="container-fluid">
+              <ul className="breadcrumb breadcrumb2 mb-0">
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>{subProducts.subproductname}</li>
+              </ul>
+            </div>
+          </div>
+        )}
+
+        <div className="container detailsContainer pt-3 pb-3">
+          <div className="row">
+            {/* Product Images */}
+            <div className="col-md-5 d-flex justify-content-center align-items-center">
+              <div className="single-product-img">
+                <img
+                  src={subProducts.image ? ${subProducts.image} : "assets/img/products/product-img-5.jpg"}
+                  alt="Product"
+                  className="img"
+                  style={{ width: "100%", height: "auto" }}
+                />
+              </div>
+            </div>
+
+            {/* Product Info */}
+            <div className="col-md-7 productInfo">
+              <h1>{subProducts.subproductname}</h1>
+              <div className="d-flex align-items-center mb-4 mt-3">
+                <Rating
+                  name="half-rating-read"
+                  value={parseFloat(subProducts.ratings)}
+                  precision={0.5}
+                  readOnly
+                />
+                <span className="text-light ml-2">(32 reviews)</span>
+              </div>
+
+              <div className="priceSec d-flex align-items-center mb-3">
+                <span className="text-g priceLarge">
+                  Rs {subProducts.offerPrice}
+                </span>
+                <div className="ml-3 d-flex flex-column">
+                  <span className="text-org">{subProducts.discount}% Off</span>
+                  <span className="text-light oldPrice">
+                    Rs {subProducts.currentPrice}
+                  </span>
+                </div>
+              </div>
+              <span className="text-dark">{grams}g</span>
+
+              <p
+                style={{
+                  fontFamily: "monospace",
+                  fontWeight: "600",
+                  fontSize: "26px",
+                }}
+              >
+                {subProducts.description}
+              </p>
+
+              <div className="d-flex align-items-center mt-4">
+                <Button
+                  className={btn-g btn-lg w-100 mr-2 ${isAdded && "no-click"}}
+                  onClick={handleAddToCart}
+                >
+                  <ShoppingCartOutlinedIcon />
+                  {isAdded ? "Added" : "Add To Cart"}
+                </Button>
+                <Button
+                  className="btn-g btn-lg w-100"
+                  onClick={
+                    isInWishlist ? handleRemoveFromWishlist : handleAddToWishlist
+                  }
+                >
+                  {isInWishlist ? (
+                    <>
+                      <FavoriteIcon /> Remove from Wishlist
+                    </>
+                  ) : (
+                    <>
+                      <FavoriteBorderOutlinedIcon /> Add to Wishlist
+                    </>
+                  )}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default ProductDetail;
+
+//import React, { useEffect, useState, useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, Link } from "react-router-dom";
+import { Typography, CircularProgress, Button, Rating } from "@mui/material";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { listSubProducts } from "../../redux/actions/productActions";
+import { addToCart } from "../../redux/actions/cartActions";
+import { addToWishlist, removeFromWishlist } from "../../redux/actions/wishlistActions";
+import Confetti from "js-confetti";
+import "./prodetail.css"; // Assuming you have custom styles in this file
+// import { Toast } from "react-bootstrap";
+import { toast, ToastContainer } from "react-toastify";
+const ProductDetail = () => {
+  const { productId, modelId, subProductId } = useParams();
+  const dispatch = useDispatch();
+  const userId = localStorage.getItem("userId");
+
+  const [isAdded, setIsAdded] = useState(false);
+  const [isInWishlist, setIsInWishlist] = useState(false);
+
+  useEffect(() => {
+    dispatch(listSubProducts(productId, modelId, subProductId));
+  }, [dispatch, productId, modelId, subProductId]);
+
+  const productDetail = useSelector((state) => state.subProducts);
+  const wishlist = useSelector((state) => state.wishlist);
+
+  useEffect(() => {
+    if (wishlist.wishlistItems.some((item) => item._id === subProductId)) {
+      setIsInWishlist(true);
+    } else {
+      setIsInWishlist(false);
+    }
+  }, [wishlist, subProductId]);
+
+  if (productDetail.loading) {
+    return <CircularProgress />;
+  }
+
+  if (!productDetail.subProducts || Object.keys(productDetail.subProducts).length === 0) {
+    return <Typography variant="body1">No products available.</Typography>;
+  }
+
+  const { subProducts } = productDetail;
+
+  // Ensure subProducts and availableQuantity are properly accessed
+  const grams = subProducts.grams;
+ // Default quantity to add to cart, can be adjusted as needed
+
+ const handleAddToCart = async () => {
+  try {
+    const productData = subProducts; // Assuming subProducts contain all necessary product details
+    const successMessage = await dispatch(
+      addToCart(
+        userId,
+        productData.productId,
+        productData.modelId,
+        productData.subProductId,
+        productData.grams,
+        1, // Fixed quantity for adding to cart
+        productData.offerPrice
+      )
+    );
+    setIsAdded(true);
+    confettiRef.current.addConfetti();
+    alert(successMessage, { onClose: () => setIsAdded(false) });
+  } catch (error) {
+    if (error.response && error.response.status === 409) {
+      toast.info("Your product is already in the cart.");
+    } else {
+      alert(error.message);
+      console.error("Add to cart error:", error);
+    }
+  }
+};
+
+  const handleAddToWishlist = () => {
+    dispatch(addToWishlist(userId, productId, modelId, subProductId, qty));
+    setIsInWishlist(true);
+  };
+
+  const handleRemoveFromWishlist = () => {
+    dispatch(removeFromWishlist(subProductId));
+    setIsInWishlist(false);
+  };
+
+  return (
+    <>
+      <section className="detailsPage mb-5">
+        <div className="container detailsContainer pt-3 pb-3">
+          <div className="row">
+            {/* Product Images */}
+            <div className="col-md-5 d-flex justify-content-center align-items-center">
+              <div className="single-product-img">
+                <img
+                  src={subProducts.image ? ${subProducts.image} : "assets/img/products/product-img-5.jpg"}
+                  alt="Product"
+                  className="img"
+                  style={{ width: "100%", height: "auto" }}
+                />
+              </div>
+            </div>
+
+            {/* Product Info */}
+            <div className="col-md-7 productInfo">
+              <h1>{subProducts.subproductname}</h1>
+              <div className="d-flex align-items-center mb-4 mt-3">
+                <Rating
+                  name="half-rating-read"
+                  value={parseFloat(subProducts.ratings)}
+                  precision={0.5}
+                  readOnly
+                />
+                <span className="text-light ml-2">(32 reviews)</span>
+              </div>
+
+              <div className="priceSec d-flex align-items-center mb-3">
+                <span className="text-g priceLarge">
+                  Rs {subProducts.offerPrice}
+                </span>
+                <div className="ml-3 d-flex flex-column">
+                  <span className="text-org">{subProducts.discount}% Off</span>
+                  <span className="text-light oldPrice">
+                    Rs {subProducts.currentPrice}
+                  </span>
+                </div>
+              </div>
+              <span className="text-dark">{grams}g</span>
+
+              <p
+                style={{
+                  fontFamily: "monospace",
+                  fontWeight: "600",
+                  fontSize: "26px",
+                }}
+              >
+                {subProducts.description}
+              </p>
+
+              <div className="d-flex align-items-center mt-4">
+                <Button
+                  className={btn-g btn-lg w-100 mr-2 ${isAdded && "no-click"}}
+                  onClick={handleAddToCart}
+                >
+                  <ShoppingCartOutlinedIcon />
+                  {isAdded ? "Added" : "Add To Cart"}
+                </Button>
+                <Button
+                  className="btn-g btn-lg w-100"
+                  onClick={
+                    isInWishlist ? handleRemoveFromWishlist : handleAddToWishlist
+                  }
+                >
+                  {isInWishlist ? (
+                    <>
+                      <FavoriteIcon /> Remove from Wishlist
+                    </>
+                  ) : (
+                    <>
+                      <FavoriteBorderOutlinedIcon /> Add to Wishlist
+                    </>
+                  )}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default ProductDetail;

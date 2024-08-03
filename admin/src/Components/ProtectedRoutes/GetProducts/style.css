@@ -1,0 +1,89 @@
+/* General Styles */
+.your-component {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.dropdowns-row {
+  margin-bottom: 20px;
+}
+
+.sub-products-section {
+  margin-top: 20px;
+}
+
+/* Product Cards */
+.product-card {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.product-card img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.product-card-content {
+  margin-top: 10px;
+}
+
+/* Typography */
+.product-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.product-description {
+  margin-bottom: 12px;
+  height: 80px; /* Limit height to control overflow */
+  overflow: hidden;
+}
+
+.read-more-button {
+  margin-top: 8px;
+  color: #007bff;
+  cursor: pointer;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.MuiPaginationItem-root {
+  font-size: 1rem;
+}
+
+/* Modal Styles */
+.MuiDialogTitle-root {
+  background-color: #f7f7f7;
+  font-weight: 600;
+}
+
+.MuiDialogContent-root {
+  padding: 20px;
+}
+
+.MuiTextField-root {
+  margin-bottom: 16px;
+}
+
+.file-input {
+  margin-top: 16px;
+}
+
+/* Buttons */
+.submit-button {
+  margin-top: 16px;
+}

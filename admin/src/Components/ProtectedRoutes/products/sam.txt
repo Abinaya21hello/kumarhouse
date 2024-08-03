@@ -1,0 +1,381 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import {
+  Container,
+  TextField,
+  Button,
+  Box,
+  Grid,
+  Paper,
+  Alert,
+  Typography,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
+  CircularProgress,
+  IconButton,
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+
+const FormContainer = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(4),
+  marginTop: theme.spacing(3),
+  boxShadow: theme.shadows[3],
+  borderRadius: 10,
+  backgroundColor: '#f9fbe7',
+  maxWidth: '600px',
+  margin: 'auto',
+}));
+
+const SubmitButton = styled(Button)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  borderRadius: 20,
+}));
+
+const CustomFileInput = styled('input')(({ theme }) => ({
+  display: 'none',
+}));
+
+const CustomFileInputLabel = styled('label')(({ theme }) => ({
+  borderRadius: 20,
+  padding: theme.spacing(1),
+  border: `1px solid ${theme.palette.divider}`,
+  display: 'inline-block',
+  cursor: 'pointer',
+  width: '100%',
+  textAlign: 'center',
+  backgroundColor: theme.palette.background.paper,
+  '&:hover': {
+    backgroundColor: theme.palette.action.hover,
+  },
+}));
+
+const AddProduct = () => {
+  const [category, setCategory] = useState('');
+  const [mainProduct, setMainProduct] = useState('');
+  const [currentSubProduct, setCurrentSubProduct] = useState({
+    subproductname: '',
+    shortdescription: '',
+    briefDescription: '',
+    currentPrice: '',
+    offerPrice: '',
+    grams: '',
+    Stock: '',
+    TopSelling: true,
+    ratings: '',
+    image: null
+  });
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [briefDescError, setBriefDescError] = useState('');
+  const [showFullDesc, setShowFullDesc] = useState(false);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get('http://localhost:5000/api/categories', {
+          withCredentials: true,
+        });
+        console.log(response);
+        setProducts(response.data); // Assuming response.data is an array of products
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []); // Empty dependency array to run once on component mount
+
+  const handleSubProductChange = (field, value) => {
+    if (field === 'briefDescription') {
+      if (value.length < 150 || value.length > 200) {
+        setBriefDescError('Brief Description must be between 150 and 200 characters.');
+      } else {
+        setBriefDescError('');
+      }
+    }
+
+    setCurrentSubProduct({
+      ...currentSubProduct,
+      [field]: value
+    });
+  };
+
+  const handleNumericInputChange = (e, fieldName) => {
+    const value = e.target.value.replace(/\D/g, ''); // Allow only digits
+    handleSubProductChange(fieldName, value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (currentSubProduct.briefDescription.length < 150 || currentSubProduct.briefDescription.length > 200) {
+      setBriefDescError('Brief Description must be between 150 and 200 characters.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('category', category);
+    formData.append('models', JSON.stringify([{ mainProduct, subProduct: [currentSubProduct] }]));
+    if (currentSubProduct.image) {
+      formData.append('file', currentSubProduct.image);
+    }
+
+    try {
+      setLoading(true);
+      await axios.post('http://localhost:5000/api/products', formData, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      setSuccess(true);
+      setError(false);
+      setCategory('');
+      setMainProduct('');
+      setCurrentSubProduct({
+        subproductname: '',
+        shortdescription: '',
+        briefDescription: '',
+        currentPrice: '',
+        offerPrice: '',
+        grams: '',
+        Stock: '',
+        TopSelling: false,
+        ratings: '',
+        image: null
+      });
+      setTimeout(() => setSuccess(false), 3000); // Clear success message after 3 seconds
+      setLoading(false);
+    } catch (error) {
+      setError(true);
+      setSuccess(false);
+      console.error('There was an error uploading the product!', error);
+      setTimeout(() => setError(false), 3000); // Clear error message after 3 seconds
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Container maxWidth="md">
+      <Typography variant="h5" gutterBottom align="center">
+        Add Product
+      </Typography>
+      {success && <Alert severity="success">Product added successfully!</Alert>}
+      {error && <Alert severity="error">There was an error adding the product. Please check your input and try again.</Alert>}
+      <FormContainer elevation={3}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                fullWidth
+                size="small"
+                label="Category"
+                variant="outlined"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                InputProps={{
+                  inputProps: {
+                    pattern: '[A-Za-z ]{1,}',
+                    title: 'Only alphabetic characters are allowed'
+                  }
+                }}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                fullWidth
+                size="small"
+                label="Main Product"
+                variant="outlined"
+                value={mainProduct}
+                onChange={(e) => setMainProduct(e.target.value)}
+                InputProps={{
+                  inputProps: {
+                    pattern: '[A-Za-z ]{1,}',
+                    title: 'Only alphabetic characters are allowed'
+                  }
+                }}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                fullWidth
+                size="small"
+                label="Sub Product Name"
+                variant="outlined"
+                value={currentSubProduct.subproductname}
+                onChange={(e) => handleSubProductChange('subproductname', e.target.value)}
+                InputProps={{
+                  inputProps: {
+                    pattern: '[A-Za-z ]{1,}',
+                    title: 'Only alphabetic characters are allowed'
+                  }
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                fullWidth
+                size="small"
+                label="Short Description"
+                variant="outlined"
+                value={currentSubProduct.shortdescription}
+                onChange={(e) => handleSubProductChange('shortdescription', e.target.value)}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={8}>
+              <TextField
+                fullWidth
+                size="small"
+                multiline
+                rows={showFullDesc ? 4 : 2}
+                label="Brief Description"
+                variant="outlined"
+                value={currentSubProduct.briefDescription}
+                onChange={(e) => handleSubProductChange('briefDescription', e.target.value)}
+                inputProps={{ maxLength: 200 }}
+                helperText={`${currentSubProduct.briefDescription.length}/200 ${briefDescError}`}
+                error={Boolean(briefDescError)}
+                required
+              />
+              <IconButton onClick={() => setShowFullDesc(!showFullDesc)}>
+                {showFullDesc ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              </IconButton>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                fullWidth
+                size="small"
+                label="Current Price"
+                variant="outlined"
+                value={currentSubProduct.currentPrice}
+                onChange={(e) => handleNumericInputChange(e, 'currentPrice')}
+                InputProps={{
+                  inputProps: {
+                    pattern: '[0-9]*',
+                    title: 'Only numeric values are allowed'
+                  }
+                }}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                fullWidth
+                size="small"
+                label="Offer Price"
+                variant="outlined"
+                value={currentSubProduct.offerPrice}
+                onChange={(e) => handleNumericInputChange(e, 'offerPrice')}
+                InputProps={{
+                  inputProps: {
+                    pattern: '[0-9]*',
+                    title: 'Only numeric values are allowed'
+                  }
+                }}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                fullWidth
+                size="small"
+                label="Grams"
+                variant="outlined"
+                value={currentSubProduct.grams}
+                onChange={(e) => handleNumericInputChange(e, 'grams')}
+                InputProps={{
+                  inputProps: {
+                    pattern: '[0-9]*',
+                    title: 'Only numeric values are allowed'
+                  }
+                }}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                fullWidth
+                size="small"
+                label="Stock"
+                variant="outlined"
+                value={currentSubProduct.Stock}
+                onChange={(e) => handleNumericInputChange(e, 'Stock')}
+                InputProps={{
+                  inputProps: {
+                    pattern: '[0-9]*',
+                    title: 'Only numeric values are allowed'
+                  }
+                }}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <FormControl fullWidth size="small">
+                <InputLabel>Top Selling</InputLabel>
+                <Select
+                  label="Top Selling"
+                  value={currentSubProduct.TopSelling}
+                  onChange={(e) => handleSubProductChange('TopSelling', e.target.value)}
+                >
+                  <MenuItem value={true}>Yes</MenuItem>
+                  <MenuItem value={false}>No</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <FormControl fullWidth size="small">
+                <InputLabel>Ratings</InputLabel>
+                <Select
+                  label="Ratings"
+                  value={currentSubProduct.ratings}
+                  onChange={(e) => handleSubProductChange('ratings', e.target.value)}
+                >
+                  {[1, 2, 3, 4, 5].map((rating) => (
+                    <MenuItem key={rating} value={rating}>
+                      {rating}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <CustomFileInput
+                accept="image/*"
+                id="image-upload"
+                type="file"
+                onChange={(e) => handleSubProductChange('image', e.target.files[0])}
+              />
+              <CustomFileInputLabel htmlFor="image-upload">
+                {currentSubProduct.image ? currentSubProduct.image.name : 'Upload Image'}
+              </CustomFileInputLabel>
+            </Grid>
+          </Grid>
+          <SubmitButton
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            disabled={loading}
+          >
+            {loading ? <CircularProgress size={24} /> : 'Add Product'}
+          </SubmitButton>
+        </Box>
+      </FormContainer>
+    </Container>
+  );
+};
+
+export default AddProduct;

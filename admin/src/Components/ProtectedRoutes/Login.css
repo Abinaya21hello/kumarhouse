@@ -1,0 +1,166 @@
+.AdminLoginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+
+  background-image: url("../../../public/assets/images/images/WhatsApp_Image_2024-07-12_at_12.43.12_PM-transformed.jpeg");
+
+  background-size: cover;
+  background-position: center;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.glass-effect {
+
+  background: rgba(181, 163, 146, 0.6);
+
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 10px;
+  animation: scaleUp 0.5s ease-in-out;
+}
+
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.alert-message {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #b0dbb1;
+  color: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  animation: slideDown 0.5s ease-in-out;
+}
+
+
+.MuiTextField-root {
+  animation: inputFocus 0.5s ease-in-out;
+  margin-bottom: 20px;
+}
+
+@keyframes inputFocus {
+  0% {
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    border-color: rgb(192, 183, 148);
+  }
+}
+
+.MuiButton-root {
+  animation: buttonPop 0.5s ease-in-out;
+  background-color: #c47956; /* Professional color */
+}
+
+@keyframes buttonPop {
+  0% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.MuiIconButton-root {
+  transition: transform 0.3s;
+}
+
+.MuiIconButton-root:hover {
+  transform: scale(1.2);
+}
+
+.MuiTypography-root {
+  color: #333; /* Professional dark color */
+}
+
+.lock-icon {
+  color: #cb832b; /* Black color for lock icon */
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.MuiTextField-root {
+  animation: inputFocus 0.5s ease-in-out;
+  margin-bottom: 20px;
+}
+
+@keyframes inputFocus {
+  0% {
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    border-color: rgba(0, 123, 255, 1);
+  }
+}
+
+.MuiButton-root {
+  animation: buttonPop 0.5s ease-in-out;
+  background-color: #00796b; /* Professional color */
+}
+
+@keyframes buttonPop {
+  0% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.MuiIconButton-root {
+  transition: transform 0.3s;
+}
+
+.MuiIconButton-root:hover {
+  transform: scale(1.2);
+}
+
+.MuiTypography-root {
+  color: #333; /* Professional dark color */
+}
+
+.lock-icon {
+  color: #000; /* Black color for lock icon */
+}
+

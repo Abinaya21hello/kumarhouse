@@ -1,0 +1,77 @@
+.OrdersInfo {
+  width: 100%;
+  height: auto;
+  /* background-color: #b9ffb9; */
+}
+
+.orderInfoContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+.orderInfoContainer .orderBox {
+  width: 23%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+
+  transition: 0.3s;
+}
+
+.orderInfoContainer .orderBox:hover {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  transition: 0.3s;
+}
+
+/* revenueBox  styling  */
+.orderInfoContainer .revenueBox {
+  background-color: #dae9f0;
+}
+.orderInfoContainer h5 {
+  margin-bottom: 0px !important;
+}
+p.DateCalc {
+  color: #545454;
+  margin: 0px;
+}
+.orderBoxHeaderRight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.orderBoxHeaderRight svg {
+  width: 24px;
+  height: 24px;
+}
+
+.orderInfoContainer .T-OrderBox {
+  background-color: #e4f599;
+}
+.orderInfoContainer .customerBox {
+  background-color: #dcd2ed;
+}
+.orderInfoContainer .DeliverPendingBox {
+  background-color: #ffd3c6;
+}
+
+/* media query */
+
+@media screen and (max-width: 991px) {
+  .orderInfoContainer .orderBox {
+    width: 48%;
+    height: 150px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .orderInfoContainer .orderBox {
+    width: 100%;
+    height: 150px;
+  }
+}

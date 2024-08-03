@@ -1,0 +1,231 @@
+/* index.css */
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+.homeSlider {
+  padding: 30px 0;
+}
+.home_slider_Main {
+  border-radius: 25px;
+  overflow: hidden;
+  position: relative;
+}
+
+.slick-arrow {
+  position: absolute;
+  top: 47%;
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 50% !important;
+  background: #f2f3f4 !important;
+  z-index: 10 !important;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.slick-arrow.slick-next {
+  right: 2% !important;
+}
+.slick-arrow.slick-prev {
+  left: 2% !important;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  font-family: FontAwesome !important;
+  font-size: 30px !important;
+  color: #000 !important;
+}
+
+.slick-arrow:hover {
+  background: #3bb77e !important;
+}
+.slick-arrow:hover::before {
+  color: #fff !important;
+}
+
+.home_slider_Main .slick-dots {
+  position: absolute;
+  bottom: 30px !important;
+}
+.home_slider_Main .slick-dots button::before {
+  width: 10px !important;
+  height: 10px !important;
+  font-size: 18px !important;
+}
+.slick-active button::before {
+  color: #3bb77e !important;
+}
+
+.home_slider_Main .item {
+  position: relative;
+}
+.home_slider_Main .item .info {
+  position: absolute;
+  top: 15%;
+  left: 7%;
+  z-index: 100;
+}
+.home_slider_Main .item .info h2 {
+  font-size: 75px;
+  font-weight: bolder;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.home_slider_Main .item .info p {
+  font-size: 35px;
+  font-weight: 500;
+  color: #7e7e7e;
+}
+
+.shopbutton button {
+  width: 300px;
+  padding: 16px;
+  font-size: clamp(1rem, -1.5rem + 8vw, 1.5rem);
+  color: #fff;
+  border-radius: 10px;
+}
+
+/* .shopbutton {
+  width: 600px;
+  height: 80px;
+  position: absolute;
+  bottom: 150px;
+  left: 0%;
+  right: 90%;
+  padding: 15px 100px;
+}
+
+.shopbutton button {
+  padding: 30px 100px !important;
+  border-radius: 50px !important;
+  color: #fff !important;
+  position: absolute;
+  top: 200px;
+  bottom: 0px;
+  right: 100px;
+  height: 80px !important;
+  width: 400px !important;
+  font-size: 30px !important;
+  background: #3bb77e;
+
+} */
+
+
+
+/* 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 1px;
+  font-family: "Poppins", sans-serif;
+} */
+
+/* body {
+    align-items: center;
+    background-color: #ffffff;
+    display: flex;
+} */
+.container {
+  color: #000;
+  margin: 5rem auto;
+  /* text-align: center; */
+}
+.homeSlider_image {
+  height: 700px;
+  overflow: hidden;
+}
+
+.homeSlider_img {
+  height: 100%;
+  object-fit: cover;
+}
+
+#countdown ul {
+  list-style: none;
+  padding: 0;
+
+  /* background-color: #3bb77e; */
+  /* text-align: center;  */
+  /* Center the countdown */
+}
+
+#countdown ul li {
+  display: inline-block;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  padding: 1em;
+}
+
+#countdown ul li span {
+  display: block;
+  font-size: 3.5rem;
+}
+
+@media (max-width: 1440px) {
+  .offerCard {
+    width: 400px;
+    height: 400px;
+  }
+  #countdown ul li span {
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .offerCard {
+    width: 350px;
+    height: 350px;
+  }
+  #countdown ul li span {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .offerCard {
+    width: 300px;
+    height: 300px;
+  }
+  #countdown ul li {
+    font-size: 1em;
+  }
+  #countdown ul li span {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .offerCard {
+    width: 250px;
+    height: 250px;
+    padding: 1rem; /* Add padding for smaller screens */
+  }
+  #countdown ul li {
+    font-size: 1em;
+    padding: 0.5em; /* Adjust padding */
+  }
+  #countdown ul li span {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .offerCard {
+    width: 200px;
+    height: 200px;
+    padding: 0.5rem; /* Further adjust padding for very small screens */
+  }
+  #countdown ul li {
+    font-size: 0.9em;
+    padding: 0.3em;
+  }
+  .homeSlider_image {
+
+    height: auto;
+
+
+    overflow: hidden;
+  }
+  .slick-arrow {
+    display: none !important; /* Hide slick arrows on screens smaller than 400px */
+  }
+}

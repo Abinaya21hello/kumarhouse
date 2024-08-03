@@ -1,0 +1,19 @@
+// src/redux/actions/types.js
+export const SET_LOGIN = 'SET_LOGIN';
+export const LOGOUT = 'LOGOUT';
+export const SET_CART_ITEMS = 'SET_CART_ITEMS';
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+export const EMPTY_CART = 'EMPTY_CART';
+
+// Additional constants like CONTACT_REQUEST, CONTACT_SUCCESS, etc.
+// contactConstants.js
+export const CONTACT_REQUEST = 'CONTACT_REQUEST';
+export const CONTACT_SUCCESS = 'CONTACT_SUCCESS';
+export const CONTACT_FAILURE = 'CONTACT_FAILURE';
+export const GET_CONTACT_REQUEST = 'GET_CONTACT_REQUEST';
+export const GET_CONTACT_SUCCESS = 'GET_CONTACT_SUCCESS';
+export const GET_CONTACT_FAILURE = 'GET_CONTACT_FAILURE';
+export const DELETE_CONTACT_REQUEST = 'DELETE_CONTACT_REQUEST';
+export const DELETE_CONTACT_SUCCESS = 'DELETE_CONTACT_SUCCESS';
+export const DELETE_CONTACT_FAILURE = 'DELETE_CONTACT_FAILURE';
